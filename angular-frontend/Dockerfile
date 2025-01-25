@@ -2,13 +2,10 @@ FROM node:16 AS build
 
 WORKDIR /app
 
-# Install the latest npm version
-RUN npm install -g npm@11.0.0
-
 # Copy package.json and package-lock.json first to optimize caching
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies (using the default npm version 8)
 RUN npm install
 
 # Copy the rest of the application code
