@@ -1,5 +1,4 @@
-FROM maven:3.9.4-eclipse-temurin-17 as builder
-
+FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
 
 COPY pom.xml .
@@ -9,15 +8,10 @@ COPY mvnw .
 RUN ./mvnw dependency:resolve dependency:resolve-plugins
 
 COPY src ./src
+RUN ./mvnw package -DskipTests
 
-RUN ./mvnw clean package -DskipTests
-
-FROM eclipse-temurin:17-jre-alpine
-
+FROM eclipse-temurin:17-jre
 WORKDIR /app
-
-COPY --from=builder /app/target/*.jar app.jar
-
-EXPOSE 8080
+COPY --from=builder /app/target/spring-backend-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
