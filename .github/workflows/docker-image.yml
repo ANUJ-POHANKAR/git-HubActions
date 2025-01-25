@@ -22,7 +22,7 @@ jobs:
     
     - name: Build the Docker image
       run: docker build -t anuj210/dock-repo:latest .
-      working-directory: ./spring-backend
+      working-directory: ./angular-frontend/
 
     - name: Push the Docker image
-      run: docker push anuj210/dock-repo:latest
+      run: docker push anuj210/dock-repo:git-frontend
