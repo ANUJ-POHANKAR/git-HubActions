@@ -29,16 +29,20 @@ jobs:
         cache: maven
     - name: Install dependencies
       run: mvn -B dependency:resolve
+      working-directory: ./spring-backend
 
     - name: Compile and test the application
       run: mvn -B test
+      working-directory: ./spring-backend
+
     - name: Package the application
-      run: mvn -B package --file pom.xml
-    
+      run: mvn -B package
+      working-directory: ./spring-backend
+
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: spring-backend-jar
-        path: target/*.jar
+        path: spring-backend/target/*.jar
 
   
