@@ -3,16 +3,8 @@ name: Docker Image CI/CD
 on:
  push:
     branches: [ "main" ]
-    paths:
-      - 'angular-frontend/**'
-      - 'deployment-scripts/**'
-      - '.github/workflows/EC2-Docker.yml'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'angular-frontend/**'
-      - 'deployment-scripts/**'
-      - '.github/workflows/EC2-Docker.yml'
 
 jobs:
   build-and-deploy:
