@@ -3,9 +3,15 @@ name: Docker Image CI/CD
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'angular-frontend/**'
+      - '.github/workflows/docker-image.yml'
   pull_request:
     branches: [ "main" ]
-
+    paths:
+      - 'angular-frontend/**'
+      - '.github/workflows/docker-image.yml'
+      
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
