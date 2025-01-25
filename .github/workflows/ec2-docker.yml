@@ -24,7 +24,7 @@ jobs:
         EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Secret used as an environment variable
 
     - name: Set permissions for the SSH key
-      run: chmod 600 new.pem
+      run: chmod 400 new.pem
 
     - name: SSH into EC2, install Docker, and run the Docker container
       run: |
