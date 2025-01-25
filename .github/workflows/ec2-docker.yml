@@ -14,10 +14,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Build the Docker image
-      run: docker build -t book-page:latest -f ./angular-frontend/Dockerfile .
-      # Adjust this path to where your angular-frontend directory is located
-
     - name: Set up SSH key from GitHub Secrets (as environment variable)
       run: echo "$EC2_SSH_PRIVATE_KEY" > new.pem
       env:
@@ -32,11 +28,10 @@ jobs:
           sudo yum install docker -y
           sudo systemctl start docker
           sudo systemctl enable docker
-         
+
           docker --version
 
-          sudo docker build -t book-page .
-
+          sudo docker pull anuj210/dock-repo:git-frontend
           sudo docker images
-          sudo docker run -d -p 80:80 book-page
+          sudo docker run -d -p 80:80 git-frontend
         EOF
