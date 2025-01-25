@@ -16,7 +16,7 @@ jobs:
 
     - name: Build the Docker image
       run: docker build -t book-page:latest -f ./angular-frontend/Dockerfile .
-      working-directory: ./angular-frontend/
+      # Adjust this path to where your angular-frontend directory is located
 
     - name: Set up SSH key from GitHub Secrets (as environment variable)
       run: echo "$EC2_SSH_PRIVATE_KEY" > new.pem
