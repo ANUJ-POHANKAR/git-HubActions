@@ -27,4 +27,4 @@ jobs:
       working-directory: ./spring-backend
 
     - name: Push the Docker image
-      run: docker push anuj210/dock-repo:latest
+      run: docker push anuj210/dock-repo:githubimage
