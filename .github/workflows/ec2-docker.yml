@@ -34,4 +34,5 @@ jobs:
           sudo docker pull anuj210/dock-repo:git-frontend
           sudo docker images
           sudo docker run -d -p 80:80 anuj210/dock-repo:git-frontend
+          sudo docker ps
         EOF
