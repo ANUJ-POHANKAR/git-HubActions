@@ -1,0 +1,35 @@
+name: Docker Image CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: docker build -t book-page:latest .
+      working-directory: ./angular-frontend/
+
+    - name: SSH into EC2, install Docker, and run the Docker container
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          sudo yum install docker -y
+          sudo systemctl start docker
+          sudo systemctl enable docker
+         
+          docker --version
+
+          sudo docker build -t book-page .
+
+          sudo docker images
+          sudo docker run -d -p 80:80 book-page
+
+          EOF
