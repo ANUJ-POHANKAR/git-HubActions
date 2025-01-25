@@ -1,9 +1,9 @@
 name: Docker Image CI/CD EC2
 
 on:
- push:
+  push:
     branches: [ "main" ]
- pull_request:
+  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -18,6 +18,14 @@ jobs:
       run: docker build -t book-page:latest .
       working-directory: ./angular-frontend/
 
+    - name: Set up SSH key from GitHub Secrets (as environment variable)
+      run: echo "$EC2_SSH_PRIVATE_KEY" > new.pem
+      env:
+        EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Secret used as an environment variable
+
+    - name: Set permissions for the SSH key
+      run: chmod 600 new.pem
+
     - name: SSH into EC2, install Docker, and run the Docker container
       run: |
         ssh -o StrictHostKeyChecking=no -i new.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
@@ -31,5 +39,4 @@ jobs:
 
           sudo docker images
           sudo docker run -d -p 80:80 book-page
-
-          EOF
+        EOF
