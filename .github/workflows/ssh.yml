@@ -9,14 +9,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script_path: ./Script.sh
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -26,3 +18,12 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "index.html"  
           target: "~"
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script_path: ./Script.sh
+
